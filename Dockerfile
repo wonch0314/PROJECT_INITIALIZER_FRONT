@@ -15,4 +15,4 @@ RUN npm run build
 CMD ["npm", "run", "preview"]
 
 # docker build -t my-front .
-# docker run -d -p 5173:5173 my-front --name my-front
+# docker run -d -p 5173:5173 my-front --name my-front   
