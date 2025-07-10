@@ -1,9 +1,9 @@
-import ProjectInitializer from "./pages/ProjectInitializer";
+import Test from "./pages/TestPage";
 
 function App() {
   return (
     <>
-      <ProjectInitializer />
+      <Test />
     </>
   );
 }
