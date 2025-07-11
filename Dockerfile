@@ -1,18 +1,20 @@
-FROM node:22-alpine
-
+# 1. React 빌드 단계
+FROM node:20-alpine AS build
 WORKDIR /app
 COPY . .
-RUN npm install
-RUN npm run build
+RUN npm install && npm run build
 
-# Nginx 설치 추가
-# RUN apt-get update && apt-get install -y nginx
+# 2. Nginx 단계 (정적 파일만 포함)
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY ./.nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Nginx 설정 파일 복사
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Entrypoint: Nginx & Uvicorn 동시에 구동
-CMD ["npm", "run", "preview"]
 
-# docker build -t my-front .
-# docker run -d -p 5173:5173 my-front --name my-front   
+# docker build -t chanchan0314/my-front .
+# docker login -u chanchan0314
+# password 입력
+
+# docker push chanchan0314/my-front
+
+# docker run -d -p 5173:80 --network my-network --name my-front chanchan0314/my-front
